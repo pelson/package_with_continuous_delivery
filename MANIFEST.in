@@ -1,0 +1,2 @@
+include versioneer.py
+include continuous_delivery_with_travis_and_pypi/_version.py
