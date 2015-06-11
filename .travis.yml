@@ -1,0 +1,19 @@
+env:
+  global:
+    - PYPI_USERNAME: pelson
+    # Adds the $PYPI_PASSWORD. See http://docs.travis-ci.com/user/encryption-keys/.
+    - secure: Znk+Ft7SFaQCCuoXLCWO9S91M9McHhgnDUnsyvT4znWXjAXAV9UgRW+lr5HmRekpovDJNf20VzzxOlq5zTOVibpWjFWV0AAuq1Bzy11KbnESTXs2vrwjGzo4JD2+AOHXKbC4B0jNcpITUjxtYDlchotJwyI1bzopQi0yVbUO7CR8QGBAsz+se8Hcb1jlNNr5EgvgTVxwXwyaxJZMhDMpRXmnR0e5U3pCSmDGuyKZJXpG+d72zxcHkZAFESkI1Nadu/4gkVVVYskQvgXzk1+oxNutze8FIGJ906Qllf7C7uf35C1nsCswI6IDUmk0KO5s3hAjHqS7r6+lXqj2rv1QyfBFvmW4Lu+0PFqOOY5mO2Lt7ieDsyHdGCBnni3CA73ULicPc9xd42RnIXTuL6JwKilgP8M9BY8tyUv8aIcfvXEV0Ak4bTe/aiPO2Rvg22sz6GFbleR+5XTnssY1o+Ovibl8HEbTCMg/nz5nhA66iX2nN9/ERPDIRo3YgCn5A653OSsnqYm52mYRx5nJR+C2DXyr8d+gU+fKIvNBzXu8zDqkUe3w2GEyhn1iSmOlWxxMEJ5vrf7sfiwfQw4ZP/trmhE6hnwWdh70ERgGkTFXguFR5R+FliXUtQz3poaE5CYkjDeRBpIUWWAYMnJ/B7XIIm5iNc/ro9ON+8+FHdEPhCU=
+    
+language: python
+
+python:
+ - '2.7'
+#  - '3.4'
+
+install: python setup.py install
+
+script: python -c "print('hello world')"
+
+after_success:
+ - ./upload_to_pypi.sh
+
