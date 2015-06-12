@@ -368,11 +368,13 @@ def render_pep440_plus_one_dev(pieces):
     # 1: no tags. 0.0.0.devDISTANCE[+gHEX]
 
     if pieces["closest-tag"]:
-        rendered = add_one_to_tag(pieces["closest-tag"])
         if pieces["distance"] or pieces["dirty"]:
+            rendered = add_one_to_tag(pieces["closest-tag"])
             rendered += ".dev%d" % pieces["distance"]
             if pieces["dirty"]:
                 rendered += "+g%s" % pieces["short"]
+        else:
+            rendered = pieces["closest-tag"]
     else:
         # exception #1
         rendered = "0.0.0.dev%d" % pieces["distance"]
