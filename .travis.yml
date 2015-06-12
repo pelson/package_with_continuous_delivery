@@ -17,5 +17,6 @@ script: python -c "print('hello world')"
 after_success:
  # Clean out any artefacts from the testing, and upload!
  - git clean -fd
+ - ./configure_versioneer_for_git_branch.sh
  - ./upload_to_pypi.sh
 

@@ -1,6 +1,5 @@
 
 # Version: 0.15
-
 """
 The Versioneer
 ==============
@@ -350,6 +349,36 @@ import os
 import re
 import subprocess
 import sys
+
+
+def add_one_to_tag(tag):
+    # Break up the tag by number groups (preserving multi-digit numbers as multidigit)
+    parts = re.split("([0-9]+)", tag)
+    for i, part in enumerate(parts[::-1]):
+        if part.isdigit():
+            v = int(part) + 1
+            parts[-i - 1] = str(v)
+            break
+    return ''.join(parts)
+
+def render_pep440_plus_one_dev(pieces):
+    # [TAG+1 of minor number][.devDISTANCE][+gHEX]. The git short is included for dirty.
+
+    # exceptions:
+    # 1: no tags. 0.0.0.devDISTANCE[+gHEX]
+
+    if pieces["closest-tag"]:
+        rendered = add_one_to_tag(pieces["closest-tag"])
+        if pieces["distance"] or pieces["dirty"]:
+            rendered += ".dev%d" % pieces["distance"]
+            if pieces["dirty"]:
+                rendered += "+g%s" % pieces["short"]
+    else:
+        # exception #1
+        rendered = "0.0.0.dev%d" % pieces["distance"]
+        if pieces["dirty"]:
+            rendered += "+g%s" % pieces["short"]
+    return rendered
 
 
 class VersioneerConfig:
@@ -769,7 +798,6 @@ def render_pep440_pre(pieces):
         rendered = "0.post.dev%%d" %% pieces["distance"]
     return rendered
 
-
 def render_pep440_post(pieces):
     # TAG[.postDISTANCE[.dev0]+gHEX] . The ".dev0" means dirty. Note that
     # .dev0 sorts backwards (a dirty tree will appear "older" than the
@@ -794,6 +822,8 @@ def render_pep440_post(pieces):
             rendered += ".dev0"
         rendered += "+g%%s" %% pieces["short"]
     return rendered
+
+
 
 
 def render_pep440_old(pieces):
@@ -865,6 +895,8 @@ def render(pieces, style):
 
     if style == "pep440":
         rendered = render_pep440(pieces)
+    elif style == "pep440-plus-one-dev":
+        rendered = render_pep440_plus_one_dev(pieces)
     elif style == "pep440-pre":
         rendered = render_pep440_pre(pieces)
     elif style == "pep440-post":
@@ -1307,6 +1339,8 @@ def render(pieces, style):
 
     if style == "pep440":
         rendered = render_pep440(pieces)
+    elif style == "pep440-plus-one-dev":
+        rendered = render_pep440_plus_one_dev(pieces)
     elif style == "pep440-pre":
         rendered = render_pep440_pre(pieces)
     elif style == "pep440-post":
