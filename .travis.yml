@@ -15,5 +15,7 @@ install: python setup.py install
 script: python -c "print('hello world')"
 
 after_success:
+ # Clean out any artefacts from the testing, and upload!
+ - git clean -fd
  - ./upload_to_pypi.sh
 
