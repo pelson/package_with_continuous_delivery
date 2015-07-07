@@ -32,7 +32,11 @@ install:
       pip install -q wheel && ./ci_helpers/configure_pypi.sh 
 
 script:
- - conda build conda.recipe
- - ./ci_helpers/upload_or_check_non_existence.py ./conda.recipe pelson --channel=main
- - cd package_with_continuous_delivery && python setup.py bdist_wheel
- - python setup.py bdist_wheel upload || echo "Wheel probably already exists."
+# - test $BINSTAR_TOKEN &&  conda config --set binstar_upload yes
+ - conda build conda.recipe | tee build.out
+ - fname=$(cat build.out | grep "\$ binstar upload" | rev | cut -d ' '  -f1 | rev) 
+ - test $BINSTAR_TOKEN && binstar -t $BINSTAR_TOKEN upload ${fname} --force
+# - fname=$(conda build conda.recipe --output) && mv $fname ${fname}_old.tar.bz2
+# - ./ci_helpers/set_timestamp_of_conda_distribution.py ${fname}_old.tar.bz2 ${fname}
+# - ./ci_helpers/upload_or_check_non_existence.py ./conda.recipe pelson --channel=main
+ - cd package_with_continuous_delivery && python setup.py bdist_wheel upload

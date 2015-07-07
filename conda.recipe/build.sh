@@ -1,1 +1,1 @@
-touch $PREFIX/doneit
+echo "foo" > $PREFIX/doneit
