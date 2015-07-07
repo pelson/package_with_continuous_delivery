@@ -409,9 +409,6 @@ def get_config_from_root(root):
         parser.readfp(f)
     VCS = parser.get("versioneer", "VCS")  # mandatory
 
-    # Default matches v1.2.x, maint/1.2.x, 1.2.x, 1.x etc.
-    default_maint_branch_regexp = ".*([0-9]+\.)+x$"
-
     def get(parser, name):
         if parser.has_option("versioneer", name):
             return parser.get("versioneer", name)
@@ -426,8 +423,6 @@ def get_config_from_root(root):
         cfg.tag_prefix = ""
     cfg.parentdir_prefix = get(parser, "parentdir_prefix")
     cfg.verbose = get(parser, "verbose")
-    cfg.maint_branch_regexp = (get(parser, "maint_branch_regexp") or
-                               default_maint_branch_regexp)
     return cfg
 
 
@@ -676,7 +671,6 @@ def git_versions_from_keywords(keywords, tag_prefix, verbose):
             "branch": None}
 
 
-
 @register_vcs_handler("git", "pieces_from_vcs")
 def git_pieces_from_vcs(tag_prefix, root, verbose, run_command=run_command):
     """Get version from 'git describe' in the root of the source tree.
@@ -717,7 +711,17 @@ def git_pieces_from_vcs(tag_prefix, root, verbose, run_command=run_command):
     branch_name = run_command(GITS, ["rev-parse", "--abbrev-ref", "HEAD"],
                               cwd=root).strip()
     if branch_name == 'HEAD':
-        branch_name = None
+        branches = run_command(GITS, ["branch", "--list", "--contains"],
+                               cwd=root).split('\n')
+        branches = [branch[2:] for branch in branches if branch[4:5] != '(']
+        if 'master' in branches:
+            branch_name = 'master'
+        elif not branches:
+            branch_name = None
+        else:
+            # Pick the first branch that is returned. Good or bad.
+            branch_name = branches[0]
+
     pieces['branch'] = branch_name
 
     # parse describe_out. It will be like TAG-NUM-gHEX[-dirty] or HEX[-dirty]
@@ -768,6 +772,8 @@ def git_pieces_from_vcs(tag_prefix, root, verbose, run_command=run_command):
     return pieces
 
 
+# Default matches v1.2.x, maint/1.2.x, 1.2.x, 1.x etc.
+default_maint_branch_regexp = ".*([0-9]+\.)+x$"
 
 
 def plus_or_dot(pieces):
@@ -940,10 +946,8 @@ def render_pep440_branch_based(pieces):
     # exceptions:
     # 1: no tags. 0.0.0.devDISTANCE[+gHEX]
 
-    cfg = get_config_from_root(get_root())
-
     master = pieces.get('branch') == 'master'
-    maint = re.match(cfg.maint_branch_regexp,
+    maint = re.match(default_maint_branch_regexp,
                      pieces.get('branch') or '')
 
     # If we are on a tag, just pep440-pre it.
@@ -1010,6 +1014,7 @@ def render(pieces, style):
 
     return {"version": rendered, "full-revisionid": pieces["long"],
             "dirty": pieces["dirty"], "error": None}
+
 
 def get_versions():
     """Get version information or return default if unable to do so."""
@@ -1129,7 +1134,6 @@ def git_versions_from_keywords(keywords, tag_prefix, verbose):
             "branch": None}
 
 
-
 @register_vcs_handler("git", "pieces_from_vcs")
 def git_pieces_from_vcs(tag_prefix, root, verbose, run_command=run_command):
     """Get version from 'git describe' in the root of the source tree.
@@ -1170,7 +1174,17 @@ def git_pieces_from_vcs(tag_prefix, root, verbose, run_command=run_command):
     branch_name = run_command(GITS, ["rev-parse", "--abbrev-ref", "HEAD"],
                               cwd=root).strip()
     if branch_name == 'HEAD':
-        branch_name = None
+        branches = run_command(GITS, ["branch", "--list", "--contains"],
+                               cwd=root).split('\n')
+        branches = [branch[2:] for branch in branches if branch[4:5] != '(']
+        if 'master' in branches:
+            branch_name = 'master'
+        elif not branches:
+            branch_name = None
+        else:
+            # Pick the first branch that is returned. Good or bad.
+            branch_name = branches[0]
+
     pieces['branch'] = branch_name
 
     # parse describe_out. It will be like TAG-NUM-gHEX[-dirty] or HEX[-dirty]
@@ -1318,6 +1332,8 @@ def write_to_version_file(filename, versions):
 
     print("set %s to '%s'" % (filename, versions["version"]))
 
+# Default matches v1.2.x, maint/1.2.x, 1.2.x, 1.x etc.
+default_maint_branch_regexp = ".*([0-9]+\.)+x$"
 
 
 def plus_or_dot(pieces):
@@ -1490,10 +1506,8 @@ def render_pep440_branch_based(pieces):
     # exceptions:
     # 1: no tags. 0.0.0.devDISTANCE[+gHEX]
 
-    cfg = get_config_from_root(get_root())
-
     master = pieces.get('branch') == 'master'
-    maint = re.match(cfg.maint_branch_regexp,
+    maint = re.match(default_maint_branch_regexp,
                      pieces.get('branch') or '')
 
     # If we are on a tag, just pep440-pre it.

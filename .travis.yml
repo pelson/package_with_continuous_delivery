@@ -14,14 +14,16 @@ python:
  - '2.7'
 #  - '3.4'
 
-install: python setup.py install
+install:
+ - python setup.py install
+ - python setup.py version
 
 script: python -c "print('hello world')"
 
 after_success:
  - SHA=$(git rev-parse HEAD)
- - git remote add origin_auth https://${GIT_NAME}:${GH_TOKEN}@github.com/pelson/continuous_delivery_pure_python.git
+ - git remote add origin_auth https://${GIT_NAME}:${GH_TOKEN}@github.com/pelson/package_with_continuous_delivery.git
  - git fetch origin_auth _build && git checkout -b _build origin_auth/_build
- - cd continuous_delivery_pure_python && git fetch && git checkout $SHA && cd ..
+ - cd package_with_continuous_delivery && git fetch && git checkout $SHA && cd ..
  - 'git -c user.name="${GIT_NAME}" -c user.email="${GIT_EMAIL}" commit -am "Travis ${TRAVIS_BUILD_NUMBER}: Update build branch to ${SHA}."'
  - git push origin_auth _build
