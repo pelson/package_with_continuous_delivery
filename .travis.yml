@@ -1,23 +1,35 @@
 env:
   global:
-    - GIT_NAME: pelson
-    # travis encrypt 'GIT_EMAIL=<email> GH_TOKEN=<token>'
-    - secure: "gldLOSvI4ZeCVGj3skly7FWsFAvIl2COofd7YBZiLgvsKdgyZdbneVE8W9zjs5EST5DRb6dkEupCn999wMgBNKhtF0BVWfQVhB4kIByu+4Kh2tfxupyamUFKI6u8U3lRe0+ST2A3oOgxV1KdxN3n6i7T4v9NjVQzG75lG7UYJLOZ6SYR44ianv3eqkesM3eIu0OS+OEfaB8TIyKzfSmF58AxB9DXAg+a9CA4KEyGe/HBiIXSYTq20Eu+pGcrl3THEsP8Mx+t5ZTfvxKxBYlKhaQOJuhEo6j9+Q5B0U8LLws0ngvE131bUvDLUFkFy/jXTaFxPX4uNVV0Iqg2F0AiTKc6CraOsRGnqF1WJEseNq9mr9+FkH5EKBcFbfJoafZQ05Sk3daH8r5XFuksv8Hx2ijVKQ3aXZeZwTmZiNLFMq7uxd1D1YCRetUDHZilz4bU0p/gX3ZwmImALzENhzA2L225ISQF1XYPfEQtsVYXM0pjv5OWL576JwfBLNX2NlxoQZC+B2aRIXIX2zgkfmiwVmXTLxuYLpFjH+TAeqgdOJc3gitS/HMOEj2GrJIdzPi0io1h9yfUR8/qvDVYuwE7oNT7IkPcdAcShPDmzFTtOVppMRUNeTjRneMMPYFSutiCdyBoaQky887naOmfpEXVbPxXiu26TyJ6sVAJdAxP8gQ="
-    
+    # Adds BINSTAR_TOKEN
+    - secure: "IOF02E/oB310aMrxL7/X1UIsIi3TTe2QbK0ZRY6b5vVNg8qFSNRNZMgWW6uz9DKpHNHus+GLZ0C7ohaoZUzwbgRQVSjfq0yll+2TMvyBcmYYqOSpEz6YOpPoU76bKxRBDTV5CguZLMnFzbISw2nNtLbFm0aXhzlcWXPBBhrQ2vpOCg9aRDRHYHd9fbC3D86WHUZq962CQFlV4biNa3vAJc0JbcG3sHOSz/Rsuxy/e3vj+emSJIe+lZXb0BjFT3MPOb1C2cmOko7BfVh0jvwJOheRg/VZ/JGpbm2FNuAIjOQnWavawkZ5EiiaJcUL1xN4sCBQ1lAFNCOWwq3yy2sl6OqBcBFf8cZoout2AkSe7btMCEfoqDzELLNoDXX0NCcbUZAKWwuqTNtuDwwemGbA2TRvXsW+1dPK7MNAYeincTWj7CAxgmtBSVB4SNuVy9P3q5z4IjWzsRP9p6Y1dF5w4Ds2tvLRTibwlJepABC8GCiPdmzck5vbwjOMdRCoW93FrbMANwZuScQFNCB6FRhwynAcvLPkg4RkjnN7strPFVfDdCcIKaHWzryOG9XYtBGhWN2t4JkNHh6OVUOjaACUEv2tpFqz8ZfTGp03YBRz9c3zRey/X52CvFzutsAHdND4D5HF5ZfeUhDf0nAxgGOraUlxFbch4hXner+l8BIv6JQ=" 
+
     - PYPI_USERNAME: pelson
     # Adds the $PYPI_PASSWORD. See http://docs.travis-ci.com/user/encryption-keys/.
     - secure: Znk+Ft7SFaQCCuoXLCWO9S91M9McHhgnDUnsyvT4znWXjAXAV9UgRW+lr5HmRekpovDJNf20VzzxOlq5zTOVibpWjFWV0AAuq1Bzy11KbnESTXs2vrwjGzo4JD2+AOHXKbC4B0jNcpITUjxtYDlchotJwyI1bzopQi0yVbUO7CR8QGBAsz+se8Hcb1jlNNr5EgvgTVxwXwyaxJZMhDMpRXmnR0e5U3pCSmDGuyKZJXpG+d72zxcHkZAFESkI1Nadu/4gkVVVYskQvgXzk1+oxNutze8FIGJ906Qllf7C7uf35C1nsCswI6IDUmk0KO5s3hAjHqS7r6+lXqj2rv1QyfBFvmW4Lu+0PFqOOY5mO2Lt7ieDsyHdGCBnni3CA73ULicPc9xd42RnIXTuL6JwKilgP8M9BY8tyUv8aIcfvXEV0Ak4bTe/aiPO2Rvg22sz6GFbleR+5XTnssY1o+Ovibl8HEbTCMg/nz5nhA66iX2nN9/ERPDIRo3YgCn5A653OSsnqYm52mYRx5nJR+C2DXyr8d+gU+fKIvNBzXu8zDqkUe3w2GEyhn1iSmOlWxxMEJ5vrf7sfiwfQw4ZP/trmhE6hnwWdh70ERgGkTFXguFR5R+FliXUtQz3poaE5CYkjDeRBpIUWWAYMnJ/B7XIIm5iNc/ro9ON+8+FHdEPhCU=
     
+#language: objective-c
 language: python
 
-python:
- - '2.7'
-#  - '3.4'
+matrix:
+  include:
+    - env: CONDA_PY=27
+           CONDA_NPY=18
+    - env: CONDA_PY=27
+           CONDA_NPY=19
+    - env: CONDA_PY=34
+           CONDA_NPY=19
 
-#install: python setup.py install
+install:
+ - |
+      MINICONDA_FILE="Miniconda3-latest-Linux-x86_64.sh"
+      wget "http://repo.continuum.io/miniconda/${MINICONDA_FILE}"
+      bash $MINICONDA_FILE -b
+
+      export PATH=~travis/miniconda3/bin:$PATH
+
+      conda update --yes conda --quiet && conda install --yes conda-build jinja2 binstar --quiet
+      conda env export -n root
 
 script:
- - touch foobar
- - git add foobar
- - git -c user.name='${GIT_NAME}' -c user.email='${GIT_EMAIL}' commit -am "Added foobar"
-
+ - conda build conda.recipe
+ - ./ci_helpers/upload_or_check_non_existence.py ./conda.recipe pelson --channel=main

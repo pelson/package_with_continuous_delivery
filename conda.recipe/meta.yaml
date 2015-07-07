@@ -1,0 +1,12 @@
+package:
+    name: cd_example
+    # Should come from the submodule
+    version: 0.1
+ 
+requirements:
+    build:
+        - python
+        - numpy
+    run:
+        - python
+        - numpy

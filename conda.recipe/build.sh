@@ -1,0 +1,1 @@
+touch $PREFIX/doneit
