@@ -1,0 +1,3 @@
+[submodule "continuous_delivery_pure_python"]
+	path = continuous_delivery_pure_python
+	url = https://github.com/pelson/continuous_delivery_pure_python.git
