@@ -29,10 +29,10 @@ install:
 
       conda update --yes conda --quiet && conda install --yes conda-build jinja2 binstar --quiet
       conda env export -n root
-      pip install -q wheel && ./configure_pypi.sh 
+      pip install -q wheel && ./ci_helpers/configure_pypi.sh 
 
 script:
  - conda build conda.recipe
  - ./ci_helpers/upload_or_check_non_existence.py ./conda.recipe pelson --channel=main
- - cd continuous_delivery_pure_python && python setup.py bdist_wheel
+ - cd package_with_continuous_delivery && python setup.py bdist_wheel
  - python setup.py bdist_wheel upload || echo "Wheel probably already exists."
