@@ -14,6 +14,7 @@ setup(
     keywords = "example documentation continuous delivery",
     url = "https://github.com/pelson/continuous_delivery_pure_python",
     packages=['continuous_delivery_with_travis_and_pypi'],
+    install_requires=['numpy'],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Topic :: Utilities",
