@@ -16,4 +16,8 @@ The same process can be used for building executables on OS X, Linux, and Window
 
 # Versioning
 
-Nowhere in this repository is the version explicitly written. This means that there is no manual step to update the version - instead this is computed from the repository (or source for an sdist) using versioneer, along with an un-released extension to versioneer. See https://github.com/warner/python-versioneer/pull/90 for progress on the automatic versioning. 
+Nowhere in this repository is the version explicitly written. This means that there is no manual step to update the version - instead this is computed from the repository (or source for an sdist) using versioneer, along with an un-released extension to versioneer. See https://github.com/warner/python-versioneer/pull/90 for progress on the automatic versioning.
+
+# Still to do
+
+The _build branch still needs to build for all 3 OSes, but there is a repository which has implemented this for conda distributions in https://github.com/conda-forge/udunits-feedstock.
