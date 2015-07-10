@@ -2,6 +2,9 @@ package:
     name: cd_example
     # Should come from the submodule
     version: 0.1
+
+source:
+    path: ../package_with_continuous_delivery
  
 requirements:
     build:

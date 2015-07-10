@@ -1,1 +1,1 @@
-echo "foo" > $PREFIX/doneit
+python setup.py install
