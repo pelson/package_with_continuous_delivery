@@ -14,3 +14,6 @@ The _build branch is the single place where the CI tools do the building. The br
 The same process can be used for building executables on OS X, Linux, and Windows through TravisCI, CircleCI and AppVeyor respectively.
 
 
+# Versioning
+
+Nowhere in this repository is the version explicitly written. This means that there is no manual step to update the version - instead this is computed from the repository (or source for an sdist) using versioneer, along with an un-released extension to versioneer. See https://github.com/warner/python-versioneer/pull/90 for progress on the automatic versioning. 
