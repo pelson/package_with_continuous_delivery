@@ -2,7 +2,7 @@ env:
   global:
     - GIT_NAME: pelson
     # travis encrypt 'GIT_EMAIL=<email> GH_TOKEN=<token>'
-    - secure: "gldLOSvI4ZeCVGj3skly7FWsFAvIl2COofd7YBZiLgvsKdgyZdbneVE8W9zjs5EST5DRb6dkEupCn999wMgBNKhtF0BVWfQVhB4kIByu+4Kh2tfxupyamUFKI6u8U3lRe0+ST2A3oOgxV1KdxN3n6i7T4v9NjVQzG75lG7UYJLOZ6SYR44ianv3eqkesM3eIu0OS+OEfaB8TIyKzfSmF58AxB9DXAg+a9CA4KEyGe/HBiIXSYTq20Eu+pGcrl3THEsP8Mx+t5ZTfvxKxBYlKhaQOJuhEo6j9+Q5B0U8LLws0ngvE131bUvDLUFkFy/jXTaFxPX4uNVV0Iqg2F0AiTKc6CraOsRGnqF1WJEseNq9mr9+FkH5EKBcFbfJoafZQ05Sk3daH8r5XFuksv8Hx2ijVKQ3aXZeZwTmZiNLFMq7uxd1D1YCRetUDHZilz4bU0p/gX3ZwmImALzENhzA2L225ISQF1XYPfEQtsVYXM0pjv5OWL576JwfBLNX2NlxoQZC+B2aRIXIX2zgkfmiwVmXTLxuYLpFjH+TAeqgdOJc3gitS/HMOEj2GrJIdzPi0io1h9yfUR8/qvDVYuwE7oNT7IkPcdAcShPDmzFTtOVppMRUNeTjRneMMPYFSutiCdyBoaQky887naOmfpEXVbPxXiu26TyJ6sVAJdAxP8gQ="
+    secure: "Xu67hAmd/oA/899DUg8PZOM1qR8Bir2p72A6E946MdMIi0gEF8s+lN/Ya/nx/7fveY8Wl8E6HbTRWVrMgfi1EY6MMnyi5k8kR/crroxdCV8FL+gT6iHr/2INAbRJT/aNMDMWm0KlzjfJTs/5R7OPP8YnIStQSsLV9DxXBCqfLk1o3O3Qf1uvQFWQiotYzz/NCeUVTD0Okjy7jtFu1ARIm7yOnddtin7hUpmpMIUlLGhcJb0ZyakVFWPN0lG+Vp1cU3o+a61zj6UidvN4H+NFL3LPY1izB5gy4ejJbYnkZrJnKbJ1Vv7v8G4Wu/oT5M2Q+Z5gNQmE00m1l9Ks1PUdXpmlZZuQSbHFqej/Tc5QjBoGFlTBrfCeurBuE70MyrnT3UxU0QYLHceD1M0WDsgp2FyHcaxP3nTE9Kh472iVl+WKCtSisLYNcQWfiPmMw4/qUnje9gJW3cCY5sdPvhaoVY1H9btVpAXBwbckJS/q677Rf8GAVfVUEfdy2N8gXwRT2kIJROrVSQ1Shtsat+btKZKaXuMHIFnSLXKoMRfnBAJ1tnljumtDoJKM8hTYGFPRgJtM6nDwcozoTho7/hRI/zjZCbESpAbPT7IknHUdib2fQFmSFltwvuXyiKoUIUwZg439Gp75Un1mEONWyZqJ7Nvx0MvoI13LFPsd6RGoxk8="
  
     - PYPI_USERNAME: pelson
     # Adds the $PYPI_PASSWORD. See http://docs.travis-ci.com/user/encryption-keys/.
@@ -28,4 +28,4 @@ after_success:
  - cd package_with_continuous_delivery && git fetch && git status && git checkout $SHA && cd ..
  - git status
  - 'git -c user.name="${GIT_NAME}" -c user.email="${GIT_EMAIL}" commit -am "Travis ${TRAVIS_BUILD_NUMBER}: Update build branch to ${SHA}."'
- - git push origin_auth _build
+ - git push origin_auth _build > /dev/null
